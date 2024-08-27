@@ -1,7 +1,8 @@
 package dao;
 
+import DAO.IDAO;
 import modelo.Producto;
-import configuration.Conexion;
+import configuracion.Conexion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * Clase DAO para realizar operaciones CRUD sobre la entidad Producto.
  * @author cparra
  */
-public class ProductoDAO {
+public class ProductoDAO implements IDAO<Producto>{
 
     private final Conexion conexion;
 
@@ -19,7 +20,8 @@ public class ProductoDAO {
         this.conexion = new Conexion();
     }
 
-    public boolean crearProducto(Producto producto) {
+    @Override
+    public boolean crear(Producto producto) {
         String sql = "INSERT INTO productos (nombre, precio) VALUES (?, ?)";
 
         try (Connection conn = conexion.conectar();
@@ -37,7 +39,8 @@ public class ProductoDAO {
         }
     }
 
-    public List<Producto> leerProductos() {
+    @Override
+    public List<Producto> consultar() {
         String sql = "SELECT * FROM productos";
         List<Producto> listaProductos = new ArrayList<>();
 
@@ -61,7 +64,8 @@ public class ProductoDAO {
         return listaProductos;
     }
 
-    public boolean actualizarProducto(Producto producto) {
+    @Override
+    public boolean actualizar(Producto producto) {
         String sql = "UPDATE productos SET nombre = ?, precio = ? WHERE id = ?";
 
         try (Connection conn = conexion.conectar();
@@ -80,7 +84,8 @@ public class ProductoDAO {
         }
     }
 
-    public boolean eliminarProducto(String id) {
+    @Override
+    public boolean eliminar(String id) {
         String sql = "DELETE FROM productos WHERE id = ?";
 
         try (Connection conn = conexion.conectar();
@@ -97,7 +102,8 @@ public class ProductoDAO {
         }
     }
 
-    public Producto buscarProductoPorId(String id) {
+    @Override
+    public Producto buscarPorId(String id) {
         String sql = "SELECT * FROM productos WHERE id = ?";
 
         try (Connection conn = conexion.conectar();

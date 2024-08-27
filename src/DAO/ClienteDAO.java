@@ -1,7 +1,8 @@
 package dao;
 
+import DAO.IDAO;
 import modelo.Cliente;
-import configuration.Conexion;
+import configuracion.Conexion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * Clase DAO para realizar operaciones CRUD sobre la entidad Cliente.
  * @author cparra
  */
-public class ClienteDAO {
+public class ClienteDAO implements IDAO<Cliente>{
 
     private final Conexion conexion;
 
@@ -19,7 +20,8 @@ public class ClienteDAO {
         this.conexion = new Conexion();
     }
 
-    public boolean crearCliente(Cliente cliente) {
+    @Override
+    public boolean crear(Cliente cliente) {
         String sql = "INSERT INTO clientes (nombre, numeroTelefono, direccion) VALUES (?, ?, ?)";
 
         try (Connection conn = conexion.conectar();
@@ -38,7 +40,8 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> leerClientes() {
+    @Override
+    public List<Cliente> consultar() {
         String sql = "SELECT * FROM clientes";
         List<Cliente> listaClientes = new ArrayList<>();
 
@@ -63,7 +66,8 @@ public class ClienteDAO {
         return listaClientes;
     }
 
-    public boolean actualizarCliente(Cliente cliente) {
+    @Override
+    public boolean actualizar(Cliente cliente) {
         String sql = "UPDATE clientes SET nombre = ?, numeroTelefono = ?, direccion = ? WHERE id = ?";
 
         try (Connection conn = conexion.conectar();
@@ -83,7 +87,8 @@ public class ClienteDAO {
         }
     }
 
-    public boolean eliminarCliente(String id) {
+    @Override
+    public boolean eliminar(String id) {
         String sql = "DELETE FROM clientes WHERE id = ?";
 
         try (Connection conn = conexion.conectar();
@@ -100,7 +105,12 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente buscarClientePorId(String id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Cliente buscarPorId(String id) {
         String sql = "SELECT * FROM clientes WHERE id = ?";
 
         try (Connection conn = conexion.conectar();

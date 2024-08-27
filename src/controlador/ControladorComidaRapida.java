@@ -9,10 +9,10 @@ import vista.Vista;
 import java.util.List;
 
 /**
- * Clase principal para manejar el menÃº CRUD de Cliente y Producto.
+ * Clase principal para manejar el menú CRUD de Cliente y Producto.
  * @author cparra
  */
-public class CalidadSoftware {
+public class ControladorComidaRapida {
 
     private static final Vista vista = new Vista();
     private static final ClienteDAO clienteDAO = new ClienteDAO();
@@ -23,8 +23,8 @@ public class CalidadSoftware {
 
         do {
             mostrarMenu();
-            opcion = vista.ingresarInt("Seleccione una opciÃ³n: ");
-            vista.mostrarMensaje("");  // Para un salto de lÃ­nea
+            opcion = vista.ingresarInt("Seleccione una opción: ");
+            vista.mostrarMensaje("");  // Para un salto de línea
 
             switch (opcion) {
                 case 1:
@@ -55,7 +55,7 @@ public class CalidadSoftware {
                     vista.mostrarMensaje("Saliendo del sistema...");
                     break;
                 default:
-                    vista.mostrarError("OpciÃ³n no vÃ¡lida. Intente nuevamente.");
+                    vista.mostrarError("Opción no válida. Intente nuevamente.");
             }
         } while (opcion != 9);
     }
@@ -73,14 +73,14 @@ public class CalidadSoftware {
         vista.mostrarMensaje("9. Salir");
     }
 
-    // MÃ©todos para CRUD de Cliente
+    // Métodos para CRUD de Cliente
     private static void crearCliente() {
         String nombre = vista.ingresarString("Ingrese el nombre del cliente: ");
-        String telefono = vista.ingresarString("Ingrese el nÃºmero de telÃ©fono del cliente: ");
-        String direccion = vista.ingresarString("Ingrese la direcciÃ³n del cliente: ");
+        String telefono = vista.ingresarString("Ingrese el número de teléfono del cliente: ");
+        String direccion = vista.ingresarString("Ingrese la dirección del cliente: ");
 
         Cliente cliente = new Cliente(nombre, telefono, direccion);
-        if (clienteDAO.crearCliente(cliente)) {
+        if (clienteDAO.crear(cliente)) {
             vista.mostrarMensaje("Cliente creado exitosamente.");
         } else {
             vista.mostrarError("Error al crear el cliente.");
@@ -88,15 +88,15 @@ public class CalidadSoftware {
     }
 
     private static void leerClientes() {
-        List<Cliente> clientes = clienteDAO.leerClientes();
+        List<Cliente> clientes = clienteDAO.consultar();
         if (clientes.isEmpty()) {
             vista.mostrarMensaje("No hay clientes registrados.");
         } else {
             vista.mostrarMensaje("---- Lista de Clientes ----");
             for (Cliente cliente : clientes) {
                 vista.mostrarMensaje("Nombre: " + cliente.getNombre());
-                vista.mostrarMensaje("TelÃ©fono: " + cliente.getNumeroTelefono());
-                vista.mostrarMensaje("DirecciÃ³n: " + cliente.getDireccion());
+                vista.mostrarMensaje("Teléfono: " + cliente.getNumeroTelefono());
+                vista.mostrarMensaje("Dirección: " + cliente.getDireccion());
                 vista.mostrarMensaje("----------------------------");
             }
         }
@@ -104,18 +104,18 @@ public class CalidadSoftware {
 
     private static void actualizarCliente() {
         String id = vista.ingresarString("Ingrese el ID del cliente a actualizar: ");
-        Cliente cliente = clienteDAO.buscarClientePorId(id);
+        Cliente cliente = clienteDAO.buscarPorId(id);
 
         if (cliente != null) {
             String nuevoNombre = vista.ingresarString("Ingrese el nuevo nombre: ");
-            String nuevoTelefono = vista.ingresarString("Ingrese el nuevo nÃºmero de telÃ©fono: ");
-            String nuevaDireccion = vista.ingresarString("Ingrese la nueva direcciÃ³n: ");
+            String nuevoTelefono = vista.ingresarString("Ingrese el nuevo número de teléfono: ");
+            String nuevaDireccion = vista.ingresarString("Ingrese la nueva dirección: ");
 
             cliente.setNombre(nuevoNombre);
             cliente.setNumeroTelefono(nuevoTelefono);
             cliente.setDireccion(nuevaDireccion);
 
-            if (clienteDAO.actualizarCliente(cliente)) {
+            if (clienteDAO.actualizar(cliente)) {
                 vista.mostrarMensaje("Cliente actualizado exitosamente.");
             } else {
                 vista.mostrarError("Error al actualizar el cliente.");
@@ -127,20 +127,20 @@ public class CalidadSoftware {
 
     private static void eliminarCliente() {
         String id = vista.ingresarString("Ingrese el ID del cliente a eliminar: ");
-        if (clienteDAO.eliminarCliente(id)) {
+        if (clienteDAO.eliminar(id)) {
             vista.mostrarMensaje("Cliente eliminado exitosamente.");
         } else {
             vista.mostrarError("Cliente no encontrado.");
         }
     }
 
-    // MÃ©todos para CRUD de Producto
+    // Métodos para CRUD de Producto
     private static void crearProducto() {
         String nombre = vista.ingresarString("Ingrese el nombre del producto: ");
         Double precio = vista.ingresarDouble("Ingrese el precio del producto: ");
 
         Producto producto = new Producto(nombre, precio);
-        if (productoDAO.crearProducto(producto)) {
+        if (productoDAO.crear(producto)) {
             vista.mostrarMensaje("Producto creado exitosamente.");
         } else {
             vista.mostrarError("Error al crear el producto.");
@@ -148,7 +148,7 @@ public class CalidadSoftware {
     }
 
     private static void leerProductos() {
-        List<Producto> productos = productoDAO.leerProductos();
+        List<Producto> productos = productoDAO.consultar();
         if (productos.isEmpty()) {
             vista.mostrarMensaje("No hay productos registrados.");
         } else {
@@ -163,7 +163,7 @@ public class CalidadSoftware {
 
     private static void actualizarProducto() {
         String id = vista.ingresarString("Ingrese el ID del producto a actualizar: ");
-        Producto producto = productoDAO.buscarProductoPorId(id);
+        Producto producto = productoDAO.buscarPorId(id);
 
         if (producto != null) {
             String nuevoNombre = vista.ingresarString("Ingrese el nuevo nombre: ");
@@ -172,7 +172,7 @@ public class CalidadSoftware {
             producto.setNombre(nuevoNombre);
             producto.setPrecio(nuevoPrecio);
 
-            if (productoDAO.actualizarProducto(producto)) {
+            if (productoDAO.actualizar(producto)) {
                 vista.mostrarMensaje("Producto actualizado exitosamente.");
             } else {
                 vista.mostrarError("Error al actualizar el producto.");
@@ -184,7 +184,7 @@ public class CalidadSoftware {
 
     private static void eliminarProducto() {
         String id = vista.ingresarString("Ingrese el ID del producto a eliminar: ");
-        if (productoDAO.eliminarProducto(id)) {
+        if (productoDAO.eliminar(id)) {
             vista.mostrarMensaje("Producto eliminado exitosamente.");
         } else {
             vista.mostrarError("Producto no encontrado.");

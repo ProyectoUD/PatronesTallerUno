@@ -25,6 +25,9 @@ public class Cliente {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -48,11 +51,6 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     
 
 }
