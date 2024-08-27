@@ -26,7 +26,9 @@ public class Vista {
             System.out.println("Error: Por favor ingrese un número entero válido.");
             scanner.next(); // Consume la entrada incorrecta
         }
-        return scanner.nextInt();
+        int value = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+        return value;
     }
     
     // Método para ingresar un double
@@ -36,7 +38,9 @@ public class Vista {
             System.out.println("Error: Por favor ingrese un número decimal válido.");
             scanner.next(); // Consume la entrada incorrecta
         }
-        return scanner.nextDouble();
+        double value = scanner.nextDouble();
+        scanner.nextLine(); // Consumir el salto de línea
+        return value;
     }
     
     // Método para ingresar una fecha y hora (LocalDateTime)

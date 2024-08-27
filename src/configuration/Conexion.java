@@ -3,6 +3,7 @@ package configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.io.File;
 
 /**
@@ -28,11 +29,36 @@ public class Conexion {
             if (conexion == null || conexion.isClosed()) {
                 conexion = DriverManager.getConnection(URL);
                 System.out.println("Conexión establecida con la base de datos SQLite.");
+                
+                // Crear las tablas si no existen
+                crearTablas();
             }
         } catch (SQLException e) {
             System.err.println("Error al conectar con la base de datos: " + e.getMessage());
         }
         return conexion;
+    }
+
+    // Método para crear las tablas si no existen
+    private void crearTablas() {
+        String sqlClientes = "CREATE TABLE IF NOT EXISTS clientes (" +
+                             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                             "nombre TEXT NOT NULL, " +
+                             "numeroTelefono TEXT NOT NULL, " +
+                             "direccion TEXT NOT NULL);";
+
+        String sqlProductos = "CREATE TABLE IF NOT EXISTS productos (" +
+                              "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                              "nombre TEXT NOT NULL, " +
+                              "precio REAL NOT NULL);";
+
+        try (Statement stmt = conexion.createStatement()) {
+            stmt.execute(sqlClientes);
+            stmt.execute(sqlProductos);
+            System.out.println("Tablas 'clientes' y 'productos' creadas o ya existen.");
+        } catch (SQLException e) {
+            System.err.println("Error al crear las tablas: " + e.getMessage());
+        }
     }
 
     // Método para cerrar la conexión
@@ -47,4 +73,5 @@ public class Conexion {
         }
     }
 }
+
 

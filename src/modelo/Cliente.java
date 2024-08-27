@@ -49,4 +49,10 @@ public class Cliente {
         this.direccion = direccion;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    
+
 }

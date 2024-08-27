@@ -39,4 +39,10 @@ public class Producto {
         this.precio = precio;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    
+
 }
