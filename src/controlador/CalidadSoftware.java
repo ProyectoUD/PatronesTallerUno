@@ -23,7 +23,7 @@ public class CalidadSoftware {
 
         do {
             mostrarMenu();
-            opcion = vista.ingresarInt("Seleccione una opcion: ");
+            opcion = vista.ingresarInt("Seleccione una opción: ");
             vista.mostrarMensaje("");  // Para un salto de línea
 
             switch (opcion) {
@@ -76,8 +76,8 @@ public class CalidadSoftware {
     // Métodos para CRUD de Cliente
     private static void crearCliente() {
         String nombre = vista.ingresarString("Ingrese el nombre del cliente: ");
-        String telefono = vista.ingresarString("Ingrese el numero de teléfono del cliente: ");
-        String direccion = vista.ingresarString("Ingrese la direccion del cliente: ");
+        String telefono = vista.ingresarString("Ingrese el número de teléfono del cliente: ");
+        String direccion = vista.ingresarString("Ingrese la dirección del cliente: ");
 
         Cliente cliente = new Cliente(nombre, telefono, direccion);
         if (clienteDAO.crearCliente(cliente)) {
@@ -95,7 +95,7 @@ public class CalidadSoftware {
             vista.mostrarMensaje("---- Lista de Clientes ----");
             for (Cliente cliente : clientes) {
                 vista.mostrarMensaje("Nombre: " + cliente.getNombre());
-                vista.mostrarMensaje("Telefono: " + cliente.getNumeroTelefono());
+                vista.mostrarMensaje("Teléfono: " + cliente.getNumeroTelefono());
                 vista.mostrarMensaje("Dirección: " + cliente.getDireccion());
                 vista.mostrarMensaje("----------------------------");
             }

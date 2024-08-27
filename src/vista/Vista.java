@@ -1,7 +1,5 @@
 package vista;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -43,19 +41,6 @@ public class Vista {
         return value;
     }
     
-    // Método para ingresar una fecha y hora (LocalDateTime)
-    public LocalDateTime ingresarDateTime(String mensaje) {
-        System.out.print(mensaje);
-        String input = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        
-        try {
-            return LocalDateTime.parse(input, formatter);
-        } catch (Exception e) {
-            System.out.println("Error: Formato de fecha y hora inválido. Use el formato 'yyyy-MM-dd HH:mm'.");
-            return ingresarDateTime(mensaje); // Reintenta la entrada
-        }
-    }
     
     // Método para imprimir un mensaje en la consola
     public void mostrarMensaje(String mensaje) {
